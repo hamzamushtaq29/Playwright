@@ -103,5 +103,6 @@ test.describe.serial('Form Testing', () => {
         // Check validation message
         await expect(page.locator('#multipleFilesStatus')).toHaveText('No files selected.')
         console.log('Multiple file empty submission validation test passed.')
+        console.log(' Test Github.')
     })
 })
