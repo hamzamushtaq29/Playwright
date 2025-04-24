@@ -48,7 +48,7 @@ test.describe.serial('Form Testing', () => {
       await page.locator('//input[@id="datepicker"]').fill('04/08/1999')
       await expect(page.locator('//input[@id="datepicker"]')).toHaveValue('04/08/1999') 
     })
-    test.only('Select and display a date ', async({page}) =>{
+    test('Select and display a date ', async({page}) =>{
     const dateToSet = '16/16/1980'
     await page.evaluate(() => {
     document.querySelector('#txtDate').removeAttribute('readonly')
