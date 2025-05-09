@@ -13,11 +13,11 @@ test.describe.serial('Form Testing', () => {
       ///Email
       await page.locator('//input[@id="email"]').fill('hamzamushtaq16@gmail.com')
       await expect(page.locator('//input[@id="email"]')).toHaveValue('hamzamushtaq16@gmail.com')
-      ///Assertion for email format
+      ///Assertion for email format///
       ///Assertion for email format validation (regex-based)
       const emailValue = await page.locator('//input[@id="email"]').inputValue();
       expect(emailValue).toMatch(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
-      //Phone number
+      //Phone number///
       await page.locator('//input[@id="phone"]').fill('+92033414')
       await expect(page.locator('//input[@id="phone"]')).toHaveValue('+92033414')
       ///Address
@@ -58,11 +58,11 @@ test.describe.serial('Form Testing', () => {
     console.log('Date set:', selectedDate);
     })
     test('Pick date ranges and submit', async ({ page }) => {
-      await page.locator('//input[@id="start-date"]').fill('1999-04-01')
-      await page.locator('//input[@id="end-date"]').fill('2012-07-08')
+      await page.locator('//input[@id="start-date"]').fill('1997-04-01')
+      await page.locator('//input[@id="end-date"]').fill('2000-07-08')
       await page.locator('//button[@class="submit-btn"]').click()
-      await page.locator('//div[@id="result"]')
-      await expect(page.locator('//div[@id="result"]')).toHaveText(/You selected a range of \d+ days/);
+      const result= await page.locator('//div[@id="result"]')
+      await expect(result).toHaveText(/You selected a range of \d+ days/);
     })
     const fs = require('fs')
     const singleFilePath = 'C:/Users/hamza.m/Downloads/abc.txt'; 
@@ -104,5 +104,26 @@ test.describe.serial('Form Testing', () => {
         await expect(page.locator('#multipleFilesStatus')).toHaveText('No files selected.')
         console.log('Multiple file empty submission validation test passed.')
         console.log(' Test Github.')
+    
     })
+    const { chromium } = require('playwright')
+    test.only('new tab', async () => {
+      // Launch the browser
+      const browser = await chromium.launch({ headless: false }); // Set headless: false to see the browser action
+      const context = await browser.newContext()
+      const page = await context.newPage()
+  // Wait for the new tab to open after clicking the button
+  const [newPage] = await Promise.all([
+    context.waitForEvent('page'), // Waits for the new tab
+    page.click('button', { hasText: 'New Tab' }) // Adjust the selector as needed
+  ]);
+  // Wait for the new tab to load content
+  await newPage.waitForLoadState()
+
+  // Perform actions in the new tab
+  console.log('https://www.google.com/', newPage.url())
+
+  // Close the browser
+  await browser.close()
+  })
 })

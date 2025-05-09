@@ -20,5 +20,8 @@
     upload multiple file
     Mouser hover.    
     
+    https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup
+    I have followed this link for Git setup and installation.
+    
 
     
