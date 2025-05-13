@@ -7,7 +7,7 @@ test.describe.serial('Form Testing', () => {
     test.afterEach(async ({ page }) => {
       console.log('All tests completed successfully');
     })
-    test('Fill Text fields', async ({ page }) => {
+    /*test('Fill Text fields', async ({ page }) => {
       ////Name////
       await page.locator('//input[@id="name"]').fill('Hamza Mushtaq').then(() => expect(page.locator('//input[@id="name"]')).toHaveValue('Hamza Mushtaq'))   
       ///Email
@@ -105,25 +105,69 @@ test.describe.serial('Form Testing', () => {
         console.log('Multiple file empty submission validation test passed.')
         console.log(' Test Github.')
     
+    })*/
+  
+  test('handle simple alert', async ({page})=>{
+    await page.locator('//button[@id="alertBtn"]').click()
+    // Intercept the prompt dialog
+  page.once('dialog', async (dialog) => {
+    expect(dialog.message()).toBe('I am an alert box!')
+    await dialog.accept('I am an alert box!') // Provide input to the prompt
+  })
+ // Verify the page displays 
+ await page.click('//button[@id="alertBtn"]')
+ //await expect(page.locator('text=I am an alert box!')).toBeVisible()
+  })
+  test('handle confirmation  alert', async ({page})=>{
+    await page.locator('//button[@id="confirmBtn"]').click()
+    // Intercept the prompt dialog
+  page.once('dialog', async (dialog) => {
+    expect(dialog.message()).toBe('Press a button!')
+    await dialog.accept('Press a button!') // Provide input to the prompt
+  })
+ // Verify the page displays
+ await page.click('//button[@id="confirmBtn"]')
+  })
+  test('Handle prompt alert', async({page})=>{
+    await page.locator('//button[@id="promptBtn"]').click()
+    // Intercept the prompt dialog
+  page.once('dialog', async (dialog) => {
+    expect(dialog.type()).toBe('prompt')
+    expect(dialog.message()).toBe('Please enter your name:')
+    await dialog.accept('HAMZA') // Enter "Hamza" in the prompt
+  })
+  await page.click('//button[@id="promptBtn"]')
+  // Verify the result of prompt is displayed
+  await expect(page.locator('#demo')).toHaveText('Hello HAMZA! How are you today?');
+  })
+
+  test('should show unsuccessful message when prompt is cancelled', async ({ page }) => {
+    page.once('dialog', async dialog => {
+      expect(dialog.type()).toBe('prompt')
+     expect(dialog.message()).toBe('Please enter your name:')
+      await dialog.dismiss(); // Click Cancel
     })
-    const { chromium } = require('playwright')
-    test.only('new tab', async () => {
-      // Launch the browser
-      const browser = await chromium.launch({ headless: false }); // Set headless: false to see the browser action
-      const context = await browser.newContext()
-      const page = await context.newPage()
-  // Wait for the new tab to open after clicking the button
-  const [newPage] = await Promise.all([
-    context.waitForEvent('page'), // Waits for the new tab
-    page.click('button', { hasText: 'New Tab' }) // Adjust the selector as needed
-  ]);
-  // Wait for the new tab to load content
-  await newPage.waitForLoadState()
 
-  // Perform actions in the new tab
-  console.log('https://www.google.com/', newPage.url())
+    await page.click('//button[@id="promptBtn"]')
+    await expect(page.locator('#demo')).toHaveText('User cancelled the prompt.')
+  })
 
-  // Close the browser
-  await browser.close()
+  test.only('Open pop-up window', async({browser})=>{
+   //await page.locator('//button[@id="PopUp"]').click()
+   const context = await browser.newContext()
+   const page = await context.newPage()
+ 
+   await page.goto('https://www.selenium.dev/')
+ 
+   //* Prepare to catch the new popup
+  const popupPromise = context.waitForEvent('page')
+   // Click the button to open popup
+   await page.click('#popupBtn')
+ 
+   // Get the popup page
+  const popup = await popupPromise;
+   await popup.waitForLoadState()
+  //// Assert the popup URL
+ //expect(popupPage.baseURL()).toBe('https://www.selenium.dev/') 
   })
 })

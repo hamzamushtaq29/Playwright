@@ -2,13 +2,16 @@
   "name": "playwright",
   "version": "1.0.0",
   "main": "My_code.js",
-  "scripts": {},
+  "scripts": {
+    "start": "serve ./ -l 3000"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.52.0",
-    "@types/node": "^22.13.1"
+    "@types/node": "^22.13.1",
+    "serve": "^14.2.0"
   },
   "directories": {
     "test": "tests"

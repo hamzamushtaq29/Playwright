@@ -27,10 +27,20 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://127.0.0.1:3000',
-
+    ///command: 'npm run dev',  // or 'yarn dev'
+    //url: 'http://localhost:3000',
+    ///reuseExistingServer: !process.env.CI,
+    baseURL: 'http://localhost:3000',
+    headless: false, // optional, set true for CI
+   /// timeout: 120 * 1000,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+  },
+  webServer: {
+    command: 'npm start', // ya jo bhi tumhara server start command ho
+    port: 3000,
+    timeout: 60 * 1000,
+    reuseExistingServer: !process.env.CI, // Local pe same server reuse karega
   },
 
   /* Configure projects for major browsers */
