@@ -118,7 +118,8 @@ test.describe.serial('Form Testing', () => {
  await page.click('//button[@id="alertBtn"]')
  //await expect(page.locator('text=I am an alert box!')).toBeVisible()
   })
-  test('handle confirmation  alert', async ({page})=>{
+
+  test('handle confirmation alert', async ({page})=>{
     await page.locator('//button[@id="confirmBtn"]').click()
     // Intercept the prompt dialog
   page.once('dialog', async (dialog) => {
@@ -128,6 +129,7 @@ test.describe.serial('Form Testing', () => {
  // Verify the page displays
  await page.click('//button[@id="confirmBtn"]')
   })
+
   test('Handle prompt alert', async({page})=>{
     await page.locator('//button[@id="promptBtn"]').click()
     // Intercept the prompt dialog
@@ -153,21 +155,41 @@ test.describe.serial('Form Testing', () => {
   })
 
   test.only('Open pop-up window', async({browser})=>{
-   //await page.locator('//button[@id="PopUp"]').click()
-   const context = await browser.newContext()
-   const page = await context.newPage()
- 
-   await page.goto('https://www.selenium.dev/')
- 
-   //* Prepare to catch the new popup
-  const popupPromise = context.waitForEvent('page')
-   // Click the button to open popup
-   await page.click('#popupBtn')
- 
-   // Get the popup page
-  const popup = await popupPromise;
+   //const context = await browser.newContext()
+   //const page = await context.newPage() 
+   try {
+    await page.goto('https://www.selenium.dev/')
+  } catch (error) {
+    console.error('Page navigation failed:', error.message);
+    await page.close()
+    return
+  }
+   const popupPromise = context.waitForEvent('page')
+   await page.locator('//button[@id="PopUp"]').click()
+   const popup = await popupPromise
    await popup.waitForLoadState()
-  //// Assert the popup URL
- //expect(popupPage.baseURL()).toBe('https://www.selenium.dev/') 
+   await popup.close()
+   await context.close()
+   console.log('Test passed and all windows closed');
   })
+  
+  test('Open new tab on the button click', async ({page}) => {
+ // const browser = await chromium.launch({ headless: false });
+  //const context = await browser.newContext()
+ // const page = await context.newPage()
+  const [newPage] = await Promise.all([
+  // wait for the window.open popup
+  page.waitForEvent('popup'),
+  // trigger the click that does window.open(...)
+  page.click('button:has-text("New Tab")'),
+]);
+ 
+// make sure it’s loaded
+await newPage.waitForLoadState();
+ 
+// now you can interact with the new window:
+console.log('New page URL:', newPage.url());
+// e.g. assert it opened the right place
+expect(newPage.url()).toBe('https://www.pavantestingtools.com/');
 })
+}) 

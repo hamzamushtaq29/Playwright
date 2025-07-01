@@ -1,0 +1,25 @@
+{
+    "formData":
+    {
+        "email":"Hamza@gmail.com",
+        "name":"Hamza",
+        "phone":"+92033414",
+        "textarea":"abcd",
+        "gender": "male",
+        "day": "sunday",
+        "Country": "canada",
+        "Animals": "cat",
+        "Colors": "blue",
+        "Date1": "04/08/1999",
+        "Date2": "16/16/1980",
+        "Date_start": "1997-04-01",
+        "Date_end": "2000-07-08",
+        "Simple_alert": "I am an alert box!",
+        "Confirmation_alert": "Press a button!",
+        "Prompt_button": "HAMZA",
+        "Demo": "Hello HAMZA! How are you today?",
+        "Demo1": "User cancelled the prompt"
+
+    }
+   
+}

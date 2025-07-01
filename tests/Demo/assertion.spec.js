@@ -23,12 +23,6 @@ test('Asssertion Demo Test', async({page}) => {
      await expect(page.locator('text=Name')).toHaveAttribute('class','form-group')   
     // await expect('GUI Elements').toHaveClass('post-title entry-title')
     //check pae URl and title.
-    await expect(page).toHaveURL('https://testautomationpractice.blogspot.com/')
-    await expect(page).toHaveTitle('/.testautomationpractice/')
-
-
-
-
+     await expect(page).toHaveURL('https://testautomationpractice.blogspot.com/')
+     await expect(page).toHaveTitle('/.testautomationpractice/')
 })
-
-

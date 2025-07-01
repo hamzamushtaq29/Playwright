@@ -1,0 +1,22 @@
+{
+    "formLocators":
+    {
+        "email":"//input[@id='email']",
+        "name":"//input[@id='name']",
+        "phone":"//input[@id='phone']",
+        "textarea":"//textarea[@id='textarea']",
+        "gender": "//input[@id='male']",
+        "day": "//input[@id='sunday']",
+        "Country": "//select[@id='country']",
+        "Animals": "//select[@id='animals']",
+        "Colors": "//select[@id='colors']",
+        "Date1": "//input[@id='datepicker']",
+        "Date2": "//input[@id='txtDate']",
+        "Date_start": "//input[@id='start-date']",
+        "Date_end": "//input[@id='end-date']",
+        "Simple_alert": "//button[@id='alertBtn']",
+        "Confirmation_alert": "//button[@id='confirmBtn']",
+        "Prompt_button": "//button[@id='promptBtn']",
+        "Demo1":"#demo"
+    }
+}
