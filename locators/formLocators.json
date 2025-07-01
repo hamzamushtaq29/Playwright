@@ -17,6 +17,9 @@
         "Simple_alert": "//button[@id='alertBtn']",
         "Confirmation_alert": "//button[@id='confirmBtn']",
         "Prompt_button": "//button[@id='promptBtn']",
-        "Demo1":"#demo"
+        "Demo":"#demo",
+        "Demo1":"#demo",
+        "new_tab": "button:has-text('New Tab')",
+        "popup": "#PopUp"
     }
 }

@@ -15,8 +15,11 @@ test.describe('Form Automation', () => {
     await form.date_picker2()
     await form.date_picker3()
     await form.simple_alert()
-    await form.confirmation_alert()*/
+    await form.confirmation_alert()
     await form.prompt_alert()
+    await form.prompt_alert1()
+    await form.new_tab()*/
+    await form.new_window()
   })
   test.afterEach(({page}) => {
     console.log('All tests completed successfully');

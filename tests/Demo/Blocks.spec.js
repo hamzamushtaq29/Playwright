@@ -154,23 +154,21 @@ test.describe.serial('Form Testing', () => {
     await expect(page.locator('#demo')).toHaveText('User cancelled the prompt.')
   })
 
-  test.only('Open pop-up window', async({browser})=>{
-   //const context = await browser.newContext()
-   //const page = await context.newPage() 
-   try {
-    await page.goto('https://www.selenium.dev/')
-  } catch (error) {
-    console.error('Page navigation failed:', error.message);
-    await page.close()
-    return
-  }
-   const popupPromise = context.waitForEvent('page')
-   await page.locator('//button[@id="PopUp"]').click()
-   const popup = await popupPromise
-   await popup.waitForLoadState()
-   await popup.close()
-   await context.close()
-   console.log('Test passed and all windows closed');
+  test.only('Open pop-up window', async({page, context})=>{
+    // Wait for popup window after clicking the button
+  const [popup] = await Promise.all([
+    page.waitForEvent('popup'),
+    page.click('#PopUp')  // The button that opens a new window
+  ]);
+
+  // Wait for the new page to load
+  await popup.waitForLoadState();
+
+  // Log the popup URL
+  console.log('Popup URL:', popup.url());
+
+  // Optionally verify something on the popup page
+  //expect(popup.url()).toContain('http');
   })
   
   test('Open new tab on the button click', async ({page}) => {

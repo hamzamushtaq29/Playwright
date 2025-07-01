@@ -73,40 +73,77 @@ export class formClass{
     } 
     async simple_alert(){
       const page= this.page
-      await page.locator('//button[@id="alertBtn"]').click()
+      await page.locator(formLocators.Simple_alert).click()
     // Intercept the prompt dialog
-  page.once('dialog', async (dialog) => {
-    expect(dialog.message()).toBe('I am an alert box!')
-    await dialog.accept('I am an alert box!') // Provide input to the prompt
+      page.once('dialog', async (dialog) => {
+      expect(dialog.message()).toBe(formData.Simple_alert)
+      await dialog.accept(formData.Simple_alert) // Provide input to the prompt
   })
  // Verify the page displays 
- await page.click('//button[@id="alertBtn"]')
+      await page.click(formLocators.Simple_alert)
  //await expect(page.locator('text=I am an alert box!')).toBeVisible()
     }
     async confirmation_alert(){
       const page = this.page
-      await page.locator('//button[@id="confirmBtn"]').click()
+      await page.locator(formLocators.Confirmation_alert).click()
     // Intercept the prompt dialog
   page.once('dialog', async (dialog) => {
-    expect(dialog.message()).toBe('Press a button!')
-    await dialog.accept('Press a button!') // Provide input to the prompt
+    expect(dialog.message()).toBe(formData.Confirmation_alert)
+    await dialog.accept(formData.Confirmation_alert) // Provide input to the prompt
   })
  // Verify the page displays
- await page.click('//button[@id="confirmBtn"]')
+ await page.click(formLocators.Confirmation_alert)
 
     }
     async prompt_alert(){
       const page = this.page
-      await page.locator('//button[@id="promptBtn"]').click()
+      await page.locator(formLocators.Prompt_button).click()
     // Intercept the prompt dialog
       page.once('dialog', async (dialog) => {
       expect(dialog.type()).toBe('prompt')
       expect(dialog.message()).toBe('Please enter your name:')
       await dialog.accept('HAMZA') // Enter "Hamza" in the prompt
   })
-      await page.click('//button[@id="promptBtn"]')
+      await page.click(formLocators.Prompt_button)
       // Verify the result of prompt is displayed
-      await expect(page.locator('#demo')).toHaveText('Hello HAMZA! How are you today?');
+      await expect(page.locator(formLocators.Demo)).toHaveText(formData.Demo)
+    }
+    async prompt_alert1(){
+      const page = this.page
+      page.once('dialog', async dialog => {
+      expect(dialog.type()).toBe('prompt')
+      expect(dialog.message()).toBe('Please enter your name:')
+      await dialog.dismiss() // Click Cancel
+    })
+      await page.click(formLocators.Prompt_button)
+      await expect(page.locator(formLocators.Demo1)).toHaveText('User cancelled the prompt.')
+    }
+    async new_tab(){
+      const page = this.page
+      const [newPage] = await Promise.all([
+      // wait for the window.open popup
+      page.waitForEvent('popup'),
+     // trigger the click that does window.open(...)
+      page.click(formLocators.new_tab),
+])
+ 
+// make sure it’s loaded
+await newPage.waitForLoadState()
+ 
+// now you can interact with the new window:
+console.log('New page URL:', newPage.url())
+// e.g. assert it opened the right place
+expect(newPage.url()).toBe(formData.new_tab)
+    }
+    async new_window(){
+      const page = this.page
+      // Wait for popup window after clicking the button
+     const [popup] = await Promise.all([
+     page.waitForEvent('popup'),
+     page.click(formLocators.popup)  // The button that opens a new window
+  ]);
+    await popup.waitForLoadState();
+    console.log('Popup URL:', popup.url());
     }
 }
  

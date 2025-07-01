@@ -18,8 +18,9 @@
         "Confirmation_alert": "Press a button!",
         "Prompt_button": "HAMZA",
         "Demo": "Hello HAMZA! How are you today?",
-        "Demo1": "User cancelled the prompt"
-
+        "Demo1": "User cancelled the prompt.",
+        "new_tab": "https://www.pavantestingtools.com/",
+        "popup": "https://www.selenium.dev/"
     }
    
 }
